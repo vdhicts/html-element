@@ -1,0 +1,19 @@
+{
+    "name": "vdhicts/html-element",
+    "description": "Easily create HTML elements from PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dick van der Heiden",
+            "email": "info@vdhicts.nl"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.1",
+        "phpmd/phpmd": "^2.6"
+    },
+    "autoload": {
+        "psr-4": {"Vdhicts\\Html\\": "src/"}
+    }
+}
