@@ -1,6 +1,7 @@
 # HtmlElement
 
-This package allows you to easily create HTML elements from PHP. It's inspired by [David Walsh's blogpost](https://davidwalsh.name/create-html-elements-php-htmlelement-class) but further improved.
+This package allows you to easily create HTML elements from PHP. It's inspired by 
+[David Walsh's blogpost](https://davidwalsh.name/create-html-elements-php-htmlelement-class) but further improved.
 
 ```$php
 // Create new html element with attribute name
@@ -59,19 +60,32 @@ $containerElement->inject($rowElement);
 
 The text and attributes can also be added, which merges with existing text or attributes.
 
+## Methods
+
+* `getTag` or `setTag` to request or change the tag.
+* `getAttributes` or `getAttribute(attribute)` to retrieve all attributes with their values or one attributes with its 
+value
+* `setAttributes` or `setAttribute(attribute, value)` to manipulate all attributes or just one.
+* `addAttributeValue` adds a value to an attributes.
+* `removeAttributes` or `removeAttribute(attribute)` to remove all attributes or just one.
+* `removeAttributeValue(attribute, value)` to remove one value from a attribute.
+* `getText`, `addText` or `setText` to retrieve, add or set the inner text.
+* `inject` to inject a htmlElement into the current htmlElement.
+* `generate` generates the htmlElement and returns its string representation.
+* `output` echos the result of `generate`.
+
 ## Tests
 
 Full code coverage unit tests are available in the `tests` folder. Run via phpunit:
 
-`vendor\bin\phpunit tests`
+`vendor\bin\phpunit`
 
-Or if you are interested in the (html) coverage report:
-
-`vendor\bin\phpunit tests --coverage-html report --whitelist src`
+By default a coverage report will be generated in the `build/coverage` folder.
 
 ## Contribution
 
-Any contribution is welcome, but it should be fully tested, meet the PSR-2 standard and please create one pull request per feature. In exchange you will be credited as contributor on this page.
+Any contribution is welcome, but it should be fully tested, meet the PSR-2 standard and please create one pull request 
+per feature. In exchange you will be credited as contributor on this page.
 
 ## License
 

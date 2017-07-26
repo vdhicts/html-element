@@ -80,12 +80,12 @@ class HtmlElementTest extends TestCase
         $this->assertSame('<option value="1" selected>test</option>', $htmlElement->generate());
     }
 
-    public function testTagWithAddingAttributes()
+    public function testTagWithAddingAttributeValues()
     {
         $htmlElement = new HtmlElement('p', 'test', ['class' => 'center']);
         $this->assertSame('<p class="center">test</p>', $htmlElement->generate());
 
-        $htmlElement->addAttribute('class', 'text-success');
+        $htmlElement->addAttributeValue('class', 'text-success');
         $this->assertSame('<p class="center text-success">test</p>', $htmlElement->generate());
     }
 
@@ -107,15 +107,29 @@ class HtmlElementTest extends TestCase
         $this->assertSame('<p>test</p>', $htmlElement->generate());
     }
 
+    public function testTagWithRemovingAttributeValue()
+    {
+        $htmlElement = new HtmlElement('p', 'test', ['class' => 'center']);
+        $this->assertSame('<p class="center">test</p>', $htmlElement->generate());
+
+        $htmlElement->addAttributeValue('class', 'text-success');
+        $this->assertSame('<p class="center text-success">test</p>', $htmlElement->generate());
+
+        $htmlElement->removeAttributeValue('class', 'center');
+        $this->assertSame('<p class="text-success">test</p>', $htmlElement->generate());
+
+        $htmlElement->removeAttributeValue('role', 'alert');
+        $this->assertSame('<p class="text-success">test</p>', $htmlElement->generate());
+    }
+
     public function testTagWithAttributesRetrieval()
     {
         $htmlElement = new HtmlElement('p', 'test', ['class' => 'center']);
-        $this->assertSame('center', $htmlElement->getAttribute('class'));
-        $this->assertSame(['class' => 'center'], $htmlElement->getAttributes());
+        $this->assertSame(['center'], $htmlElement->getAttribute('class'));
+        $this->assertSame(['class' => ['center']], $htmlElement->getAttributes());
 
         $htmlElement = new HtmlElement('p', 'test');
-        $this->assertSame('', $htmlElement->getAttribute('class'));
-        $this->assertSame('center', $htmlElement->getAttribute('class', 'center'));
+        $this->assertSame([], $htmlElement->getAttribute('class'));
     }
 
     public function testTagInjection()

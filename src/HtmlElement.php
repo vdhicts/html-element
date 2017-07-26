@@ -2,10 +2,6 @@
 
 namespace Vdhicts\Html;
 
-/**
- * Class HtmlElement
- * @package App\Libraries
- */
 class HtmlElement
 {
     /**
@@ -24,7 +20,7 @@ class HtmlElement
      * The name of the HTML tag.
      * @var string
      */
-    private $tagName = '';
+    private $tag = '';
 
     /**
      * All the attributes and their values.
@@ -33,20 +29,20 @@ class HtmlElement
     private $attributes = [];
 
     /**
-     * The innertext of the HTML element.
+     * The inner text of the HTML element.
      * @var string
      */
     private $text = '';
 
     /**
      * HtmlElement constructor.
-     * @param string $tagName the name of the HTML tag
+     * @param string $tag the name of the HTML tag
      * @param string $text
      * @param array $attributes
      */
-    public function __construct($tagName = 'p', $text = '', $attributes = [])
+    public function __construct(string $tag = 'p', string $text = '', array $attributes = [])
     {
-        $this->setTagName($tagName);
+        $this->setTag($tag);
         $this->setText($text);
         $this->setAttributes($attributes);
     }
@@ -55,39 +51,74 @@ class HtmlElement
      * Returns the name of the HTML tag.
      * @return string
      */
-    private function getTagName()
+    public function getTag(): string
     {
-        return $this->tagName;
+        return $this->tag;
     }
 
     /**
      * Sets the name of the HTML tag.
-     * @param $tagName
+     * @param $tag
      * @return $this
      */
-    private function setTagName($tagName)
+    public function setTag(string $tag): self
     {
         // Store the HTML tag as lowercase
-        $this->tagName = strtolower($tagName);
+        $this->tag = strtolower($tag);
 
         return $this;
     }
 
     /**
+     * Returns an array of all attributes set.
+     * @return array
+     */
+    public function getAttributes(): array
+    {
+        return $this->attributes;
+    }
+
+    /**
      * Returns the value of the attribute. If the value isn't set, it returns the fallback;
      * @param string $attribute
-     * @param string $fallback
-     * @return string
+     * @return array
      */
-    public function getAttribute($attribute, $fallback = '')
+    public function getAttribute(string $attribute): array
     {
         // Determine if the attribute is present
-        if (!isset($this->attributes[$attribute])) {
-            return $fallback;
+        if (! array_key_exists($attribute, $this->attributes)) {
+            return [];
         }
 
         // Return the value of the attribute
         return $this->attributes[$attribute];
+    }
+
+    /**
+     * Set the value of multiple attributes at once.
+     * @param array $attributesValues
+     * @return $this
+     */
+    public function setAttributes(array $attributesValues): self
+    {
+        foreach ($attributesValues as $attribute => $value) {
+            $this->setAttribute($attribute, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of an attribute. If the attribute is already set, it overwrites the current value.
+     * @param string $attribute
+     * @param array|string $value
+     * @return $this
+     */
+    public function setAttribute(string $attribute, $value = []): self
+    {
+        $this->attributes[$attribute] = $this->wrap($value);
+
+        return $this;
     }
 
     /**
@@ -96,43 +127,94 @@ class HtmlElement
      * @param string $value
      * @return $this
      */
-    public function addAttribute($attribute, $value = '')
+    public function addAttributeValue(string $attribute, string $value = ''): self
     {
-        // A single value might be provided
-        if (!is_array($value)) {
-            $value = [$value];
-        }
-
         // Retrieve the current values of the attribute
-        $values = explode(' ', $this->getAttribute($attribute));
+        $values = $this->getAttribute($attribute);
 
         // Merge the values
-        $values = array_merge($values, $value);
+        if (! in_array($value, $values)) {
+            $values[] = $value;
+        }
 
         // Store the new values
-        $this->setAttribute($attribute, implode(' ', $values));
+        $this->setAttribute($attribute, $values);
 
         return $this;
     }
 
     /**
-     * Sets the value of an attribute. If the attribute is already set, it overwrites the current value.
+     * Remove all attributes at once.
+     * @return $this
+     */
+    public function removeAttributes(): self
+    {
+        $this->attributes = [];
+
+        return $this;
+    }
+
+    /**
+     * Removes an attribute.
+     * @param string $attribute
+     * @return $this
+     */
+    public function removeAttribute(string $attribute): self
+    {
+        // Determine if the attribute is present, unset if present
+        if (array_key_exists($attribute, $this->attributes)) {
+            unset($this->attributes[$attribute]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Removes a value from the attribute.
      * @param string $attribute
      * @param string $value
      * @return $this
      */
-    public function setAttribute($attribute, $value = '')
+    public function removeAttributeValue(string $attribute, string $value): self
     {
-        $this->attributes[$attribute] = $value;
+        // Only remove value if attribute is present
+        if (! array_key_exists($attribute, $this->attributes)) {
+            return $this;
+        }
+
+        // Remove the value from the attribute
+        $values = array_filter(
+            $this->getAttribute($attribute),
+            function ($attributeValue) use ($value) {
+                return $attributeValue !== $value;
+            }
+        );
+
+        // Stores the new values
+        $this->setAttribute($attribute, $values);
 
         return $this;
+    }
+
+    /**
+     * Wraps the value in an array.
+     * @param array|string $value
+     * @return array
+     */
+    private function wrap($value): array
+    {
+        if (! is_array($value)) {
+            return [$value];
+        }
+
+        return $value;
     }
 
     /**
      * Returns the innertext of the HTML element.
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -142,7 +224,7 @@ class HtmlElement
      * @param string $text
      * @return $this
      */
-    public function addText($text = '')
+    public function addText(string $text = ''): self
     {
         $this->text .= $text;
 
@@ -154,56 +236,9 @@ class HtmlElement
      * @param string $text
      * @return $this
      */
-    public function setText($text = '')
+    public function setText(string $text = ''): self
     {
         $this->text = $text;
-
-        return $this;
-    }
-
-    /**
-     * Removes an attribute.
-     * @param string $attribute
-     * @return $this
-     */
-    public function removeAttribute($attribute)
-    {
-        // Determine if the attribute is present, unset if present
-        if (isset($this->attributes[$attribute])) {
-            unset($this->attributes[$attribute]);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Returns an array of all attributes set.
-     * @return array
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
-    /**
-     * Set the value of multiple attributes at once.
-     * @param array $attributesValues
-     * @return $this
-     */
-    public function setAttributes(array $attributesValues)
-    {
-        $this->attributes = array_merge($this->getAttributes(), $attributesValues);
-
-        return $this;
-    }
-
-    /**
-     * Remove all attributes at once.
-     * @return $this
-     */
-    public function removeAttributes()
-    {
-        $this->attributes = [];
 
         return $this;
     }
@@ -213,7 +248,7 @@ class HtmlElement
      * @param HtmlElement $htmlElement
      * @return $this
      */
-    public function inject(HtmlElement $htmlElement)
+    public function inject(HtmlElement $htmlElement): self
     {
         $this->addText($htmlElement->generate());
 
@@ -221,10 +256,29 @@ class HtmlElement
     }
 
     /**
+     * Generates the HTML for the attribute.
+     * @param string $attribute
+     * @param array $values
+     * @return string
+     */
+    private function generateAttribute(string $attribute, array $values = []): string
+    {
+        if (! is_numeric($attribute)) {
+            return sprintf(
+                '%s="%s"',
+                $attribute,
+                htmlentities(trim(implode(' ', $values)))
+            );
+        }
+
+        return implode(' ', $values);
+    }
+
+    /**
      * Generates the HTML for the attributes of the HTML element.
      * @return string
      */
-    private function generateTagAttributes()
+    private function generateTagAttributes(): string
     {
         // When no attributes present, return empty string
         if (count($this->getAttributes()) === 0) {
@@ -232,43 +286,52 @@ class HtmlElement
         }
 
         // Collect the attributes
-        $attributes = [];
+        $renderedAttributes = [];
         foreach ($this->getAttributes() as $attribute => $value) {
-            // Attributes can have a value
-            if (!is_numeric($attribute)) {
-                $attributes[] = sprintf('%s="%s"', $attribute, htmlentities(trim($value)));
-                continue;
-            }
-
-            // Attributes hasn't got a value, it just present (i.e. checked)
-            $attributes[] = $value;
+            // Attributes can have a value or not, it just present (i.e. checked)
+            $renderedAttributes[] = $this->generateAttribute($attribute, $value);
         }
 
         // Join the attributes with a space
-        return ' ' . implode(' ', $attributes);
+        return implode(' ', $renderedAttributes);
     }
 
     /**
      * Generates the HTML tag with it's attributes and text.
      * @return string
      */
-    public function generate()
+    public function generate(): string
     {
         // The tag name is required
-        if ($this->getTagName() === '') {
+        if ($this->getTag() === '') {
             return '';
         }
 
-        // Collect the tag information
-        return sprintf(
-            '<%s%s>%s%s',
-            $this->getTagName(),
-            $this->generateTagAttributes(),
-            $this->getText(),
-            !in_array($this->getTagName(), self::SELF_CLOSING_TAGS)
-                ? sprintf('</%s>', $this->getTagName())
-                : ''
+        // Generate the attribute string
+        $tagAttributes = $this->generateTagAttributes();
+
+        // When attributes are provided, add a space between the tag and the attributes
+        $tagSeparator = '';
+        if ($tagAttributes !== '') {
+            $tagSeparator = ' ';
+        }
+
+        // Create the opening tag
+        $openingTag = sprintf(
+            '<%s%s%s>',
+            $this->getTag(),
+            $tagSeparator,
+            $tagAttributes
         );
+
+        // Create the closing tag
+        $closingTag = '';
+        if (! in_array($this->getTag(), self::SELF_CLOSING_TAGS)) {
+            $closingTag = sprintf('</%s>', $this->getTag());
+        }
+
+        // Collect the tag information
+        return $openingTag . $this->getText() . $closingTag;
     }
 
     /**
