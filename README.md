@@ -4,6 +4,9 @@ This package allows you to easily create HTML elements from PHP. It's inspired b
 [David Walsh's blogpost](https://davidwalsh.name/create-html-elements-php-htmlelement-class) but further improved.
 
 ```$php
+
+use Vdhicts\HtmlElement\HtmlElement;
+
 // Create new html element with attribute name
 $selectElement = new HtmlElement('select');
 $selectElement->setAttribute('name', 'something');

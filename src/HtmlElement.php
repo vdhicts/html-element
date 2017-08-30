@@ -1,6 +1,6 @@
 <?php
 
-namespace Vdhicts\Html;
+namespace Vdhicts\HtmlElement;
 
 class HtmlElement
 {

@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Vdhicts\Html\HtmlElement;
+use Vdhicts\HtmlElement\HtmlElement;
 
 /**
  * Class HtmlElementTest
