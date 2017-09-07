@@ -16,6 +16,10 @@ $selectElement->generate();
 $paragraphElement = new HtmlElement('p', 'text', ['class' => 'center']);
 ```
 
+## Requirements
+
+This package requires PHP 7.
+
 ## Installation
 
 This package can be used in any PHP project or with any framework. The packages is tested in PHP 5.6 and PHP 7.0.
