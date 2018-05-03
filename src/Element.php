@@ -1,8 +1,8 @@
 <?php
 
-namespace Vdhicts\HtmlElement;
+namespace Vdhicts\Dicms\Html;
 
-class HtmlElement
+class Element
 {
     /**
      * Array of self closing tags (tags who don't need the </ variant).
@@ -245,10 +245,10 @@ class HtmlElement
 
     /**
      * Inject the current HTML element with another HTML element.
-     * @param HtmlElement $htmlElement
+     * @param Element $htmlElement
      * @return $this
      */
-    public function inject(HtmlElement $htmlElement): self
+    public function inject(Element $htmlElement): self
     {
         $this->addText($htmlElement->generate());
 

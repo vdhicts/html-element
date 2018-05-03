@@ -5,7 +5,9 @@
     "authors": [
         {
             "name": "Dick van der Heiden",
-            "email": "info@vdhicts.nl"
+            "email": "info@vdhicts.nl",
+            "role": "Developer",
+            "homepage": "https://www.vdhicts.nl"
         }
     ],
     "require": {
@@ -15,6 +17,6 @@
         "phpunit/phpunit": "^6.1"
     },
     "autoload": {
-        "psr-4": {"Vdhicts\\HtmlElement\\": "src/"}
+        "psr-4": {"Vdhicts\\Dicms\\Html\\": "src/"}
     }
 }

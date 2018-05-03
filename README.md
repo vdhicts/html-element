@@ -1,19 +1,19 @@
-# HtmlElement
+# Html Element
 
 This package allows you to easily create HTML elements from PHP. It's inspired by 
 [David Walsh's blogpost](https://davidwalsh.name/create-html-elements-php-htmlelement-class) but further improved.
 
 ```$php
 
-use Vdhicts\HtmlElement\HtmlElement;
+use Vdhicts\Dicms\Html;
 
 // Create new html element with attribute name
-$selectElement = new HtmlElement('select');
+$selectElement = new Html\Element('select');
 $selectElement->setAttribute('name', 'something');
 $selectElement->generate();
 
 // Create new html element with text and attribute
-$paragraphElement = new HtmlElement('p', 'text', ['class' => 'center']);
+$paragraphElement = new Html\Element('p', 'text', ['class' => 'center']);
 ```
 
 ## Requirements
@@ -35,7 +35,7 @@ composer require vdhicts/html-element
 A new html element can be created with:
 
 ```php
-$containerElement = new HtmlElement('div');
+$containerElement = new Html\Element('div');
 $containerElement->setAttribute('class', 'container');
 ```
 
@@ -58,8 +58,8 @@ $containerElement->setAttributes(['class' => 'container', 'role' => 'container']
 Or the element could contain another html element:
 
 ```php
-$colElement = new HtmlElement('div', '', ['class' => 'col-md-6']);
-$rowElement = new HtmlElement('div', '', ['class' => 'row']);
+$colElement = new Html\Element('div', '', ['class' => 'col-md-6']);
+$rowElement = new Html\Element('div', '', ['class' => 'row']);
 
 $rowElement->inject($colElement);
 $containerElement->inject($rowElement);
@@ -77,8 +77,8 @@ value
 * `removeAttributes` or `removeAttribute(attribute)` to remove all attributes or just one.
 * `removeAttributeValue(attribute, value)` to remove one value from a attribute.
 * `getText`, `addText` or `setText` to retrieve, add or set the inner text.
-* `inject` to inject a htmlElement into the current htmlElement.
-* `generate` generates the htmlElement and returns its string representation.
+* `inject` to inject a Element into the current Element.
+* `generate` generates the Element and returns its string representation.
 * `output` echos the result of `generate`.
 
 ## Tests
@@ -94,6 +94,17 @@ By default a coverage report will be generated in the `build/coverage` folder.
 Any contribution is welcome, but it should be fully tested, meet the PSR-2 standard and please create one pull request 
 per feature. In exchange you will be credited as contributor on this page.
 
+## Security
+
+If you discover any security related issues in this or other packages of Vdhicts, please email info@vdhicts.nl instead
+of using the issue tracker.
+
 ## License
 
-This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+## About vdhicts
+
+[Van der Heiden ICT services](https://www.vdhicts.nl) is the name of my personal company for which I work as
+freelancer. Van der Heiden ICT services develops and implements IT solutions for businesses and educational
+institutions.
