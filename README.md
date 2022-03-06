@@ -3,26 +3,23 @@
 This package allows you to easily create HTML elements from PHP. It's inspired by 
 [David Walsh's blogpost](https://davidwalsh.name/create-html-elements-php-htmlelement-class) but further improved.
 
-```$php
-
-use Vdhicts\Dicms\Html;
+```php
+use Vdhicts\HtmlElement\HtmlElement;
 
 // Create new html element with attribute name
-$selectElement = new Html\Element('select');
+$selectElement = new HtmlElement('select');
 $selectElement->setAttribute('name', 'something');
 $selectElement->generate();
 
 // Create new html element with text and attribute
-$paragraphElement = new Html\Element('p', 'text', ['class' => 'center']);
+$paragraphElement = new HtmlElement('p', 'text', ['class' => 'center']);
 ```
 
 ## Requirements
 
-This package requires PHP 7.
+This package requires PHP 7.4 or higher.
 
 ## Installation
-
-This package can be used in any PHP project or with any framework. The packages is tested in PHP 5.6 and PHP 7.0.
 
 You can install the package via composer:
 
@@ -35,7 +32,9 @@ composer require vdhicts/html-element
 A new html element can be created with:
 
 ```php
-$containerElement = new Html\Element('div');
+use Vdhicts\HtmlElement\HtmlElement;
+
+$containerElement = new HtmlElement('div');
 $containerElement->setAttribute('class', 'container');
 ```
 
@@ -58,8 +57,8 @@ $containerElement->setAttributes(['class' => 'container', 'role' => 'container']
 Or the element could contain another html element:
 
 ```php
-$colElement = new Html\Element('div', '', ['class' => 'col-md-6']);
-$rowElement = new Html\Element('div', '', ['class' => 'row']);
+$colElement = new HtmlElement('div', '', ['class' => 'col-md-6']);
+$rowElement = new HtmlElement('div', '', ['class' => 'row']);
 
 $rowElement->inject($colElement);
 $containerElement->inject($rowElement);
@@ -83,28 +82,33 @@ value
 
 ## Tests
 
-Full code coverage unit tests are available in the `tests` folder. Run via phpunit:
+Unit tests are available in the `tests` folder. Run with:
 
-`vendor\bin\phpunit`
+`composer test`
 
-By default a coverage report will be generated in the `build/coverage` folder.
+When you want a code coverage report which will be generated in the `build/report` folder. Run with:
+
+`composer test-coverage`
 
 ## Contribution
 
-Any contribution is welcome, but it should be fully tested, meet the PSR-2 standard and please create one pull request 
-per feature. In exchange you will be credited as contributor on this page.
+Any contribution is welcome, but it should meet the PSR-12 standard and please create one pull request per feature/bug.
+In exchange, you will be credited as contributor on this page.
 
 ## Security
 
-If you discover any security related issues in this or other packages of Vdhicts, please email info@vdhicts.nl instead
-of using the issue tracker.
+If you discover any security related issues in this or other packages of Vdhicts, please email security@vdhicts.nl
+instead of using the issue tracker.
+
+## Support
+
+If you encounter a problem with this parser or has a question about it, feel free to open an issue on GitHub.
 
 ## License
 
 This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
-## About vdhicts
+## About Vdhicts
 
-[Van der Heiden ICT services](https://www.vdhicts.nl) is the name of my personal company for which I work as
-freelancer. Van der Heiden ICT services develops and implements IT solutions for businesses and educational
-institutions.
+[Vdhicts](https://www.vdhicts.nl) is the name of my personal company for which I work as freelancer. Vdhicts develops
+and implements IT solutions for businesses and educational institutions.
