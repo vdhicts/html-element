@@ -1,13 +1,13 @@
 <?php
 
-namespace Vdhicts\Dicms\Html;
+namespace Vdhicts\HtmlElement;
 
-class Element
+class HtmlElement
 {
     /**
-     * Array of self closing tags (tags who don't need the </ variant).
+     * Array of self-closing tags (tags who don't need the </ variant).
      */
-    const SELF_CLOSING_TAGS = [
+    private const SELF_CLOSING_TAGS = [
         'input',
         'img',
         'hr',
@@ -18,28 +18,19 @@ class Element
 
     /**
      * The name of the HTML tag.
-     * @var string
      */
-    private $tag = '';
+    private string $tag = '';
 
     /**
      * All the attributes and their values.
-     * @var array
      */
-    private $attributes = [];
+    private array $attributes = [];
 
     /**
      * The inner text of the HTML element.
-     * @var string
      */
-    private $text = '';
+    private string $text = '';
 
-    /**
-     * HtmlElement constructor.
-     * @param string $tag the name of the HTML tag
-     * @param string $text
-     * @param array $attributes
-     */
     public function __construct(string $tag = 'p', string $text = '', array $attributes = [])
     {
         $this->setTag($tag);
@@ -49,7 +40,6 @@ class Element
 
     /**
      * Returns the name of the HTML tag.
-     * @return string
      */
     public function getTag(): string
     {
@@ -58,8 +48,6 @@ class Element
 
     /**
      * Sets the name of the HTML tag.
-     * @param $tag
-     * @return $this
      */
     public function setTag(string $tag): self
     {
@@ -71,7 +59,6 @@ class Element
 
     /**
      * Returns an array of all attributes set.
-     * @return array
      */
     public function getAttributes(): array
     {
@@ -80,8 +67,6 @@ class Element
 
     /**
      * Returns the value of the attribute. If the value isn't set, it returns the fallback;
-     * @param string $attribute
-     * @return array
      */
     public function getAttribute(string $attribute): array
     {
@@ -96,8 +81,6 @@ class Element
 
     /**
      * Set the value of multiple attributes at once.
-     * @param array $attributesValues
-     * @return $this
      */
     public function setAttributes(array $attributesValues): self
     {
@@ -110,9 +93,7 @@ class Element
 
     /**
      * Sets the value of an attribute. If the attribute is already set, it overwrites the current value.
-     * @param string $attribute
      * @param array|string $value
-     * @return $this
      */
     public function setAttribute(string $attribute, $value = []): self
     {
@@ -123,9 +104,6 @@ class Element
 
     /**
      * Adds a value to the attribute.
-     * @param string $attribute
-     * @param string $value
-     * @return $this
      */
     public function addAttributeValue(string $attribute, string $value = ''): self
     {
@@ -145,7 +123,6 @@ class Element
 
     /**
      * Remove all attributes at once.
-     * @return $this
      */
     public function removeAttributes(): self
     {
@@ -156,8 +133,6 @@ class Element
 
     /**
      * Removes an attribute.
-     * @param string $attribute
-     * @return $this
      */
     public function removeAttribute(string $attribute): self
     {
@@ -171,9 +146,6 @@ class Element
 
     /**
      * Removes a value from the attribute.
-     * @param string $attribute
-     * @param string $value
-     * @return $this
      */
     public function removeAttributeValue(string $attribute, string $value): self
     {
@@ -199,7 +171,6 @@ class Element
     /**
      * Wraps the value in an array.
      * @param array|string $value
-     * @return array
      */
     private function wrap($value): array
     {
@@ -211,8 +182,7 @@ class Element
     }
 
     /**
-     * Returns the innertext of the HTML element.
-     * @return string
+     * Returns the inner text of the HTML element.
      */
     public function getText(): string
     {
@@ -220,9 +190,7 @@ class Element
     }
 
     /**
-     * Adds text to the innertext of the HTML element.
-     * @param string $text
-     * @return $this
+     * Adds text to the inner text of the HTML element.
      */
     public function addText(string $text = ''): self
     {
@@ -232,9 +200,7 @@ class Element
     }
 
     /**
-     * Sets the innertext of the HTML element.
-     * @param string $text
-     * @return $this
+     * Sets the inner text of the HTML element.
      */
     public function setText(string $text = ''): self
     {
@@ -245,10 +211,8 @@ class Element
 
     /**
      * Inject the current HTML element with another HTML element.
-     * @param Element $htmlElement
-     * @return $this
      */
-    public function inject(Element $htmlElement): self
+    public function inject(HtmlElement $htmlElement): self
     {
         $this->addText($htmlElement->generate());
 
@@ -257,9 +221,6 @@ class Element
 
     /**
      * Generates the HTML for the attribute.
-     * @param string $attribute
-     * @param array $values
-     * @return string
      */
     private function generateAttribute(string $attribute, array $values = []): string
     {
@@ -276,7 +237,6 @@ class Element
 
     /**
      * Generates the HTML for the attributes of the HTML element.
-     * @return string
      */
     private function generateTagAttributes(): string
     {
@@ -297,8 +257,7 @@ class Element
     }
 
     /**
-     * Generates the HTML tag with it's attributes and text.
-     * @return string
+     * Generates the HTML tag with its attributes and text.
      */
     public function generate(): string
     {
@@ -337,7 +296,7 @@ class Element
     /**
      * Generate the HTML for the HTML element and output it directly.
      */
-    public function output()
+    public function output(): void
     {
         echo $this->generate();
     }

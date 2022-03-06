@@ -11,12 +11,30 @@
         }
     ],
     "require": {
-        "php": "^7.0"
+        "php": "^7.4|^8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.1"
+        "phpstan/phpstan": "^1.2",
+        "phpunit/phpunit": "^9.0"
     },
     "autoload": {
-        "psr-4": {"Vdhicts\\Dicms\\Html\\": "src/"}
-    }
+        "psr-4": {
+            "Vdhicts\\HtmlElement\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vdhicts\\HtmlElement\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --no-coverage",
+        "test-coverage": "vendor/bin/phpunit",
+        "analyse": "vendor/bin/phpstan"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
